@@ -27,5 +27,58 @@
         <button type="submit">GENERATE MCQ'S</button>
 
     </form>
+
+    <hr>
+
+    <h2>Generated MCQs</h2>
+    <div id="mcq-container"></div>
+
+  <script>
+        const form = document.querySelector("form");
+
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();  
+
+            const topic = form.topic.value;
+            const difficulty = form.difficulty.value;
+            const num_questions = form.num_questions.value;
+
+    fetch(`/generate/?topic=${topic}&difficulty=${difficulty}&num_questions=${num_questions}`)
+    .then(res => res.json())
+    .then(data => {
+
+        const container = document.getElementById("mcq-container");
+
+        const questions = data.mcqs.split("\n\n");
+
+        let output = "";
+
+        questions.forEach(q => {
+            const lines = q.split("\n");
+
+            output += `<div class="question-box">`;
+
+            lines.forEach(line => {
+
+                if(line.startsWith("Q"))
+                    output += `<div class="question-title">${line}</div>`;
+
+                else if(line.startsWith("Answer"))
+                    output += `<div class="answer">${line}</div>`;
+
+                else
+                    output += `<div class="option">${line}</div>`;
+            });
+
+            output += `</div>`;
+        });
+
+        container.innerHTML = output;
+
+    })
+    .catch(err => console.log(err));
+});
+</script>
+
 </body>
 </html>
