@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI MCQ GENERATOR</title>
+</head>
+<body>
+    
+    <h2>AI MCQ GENERATOR</h2>
+
+    <form method="GET" action="/generate/">
+
+        <label>Topic: </label><br>
+        <input type="text" name="topic" required><br><br>
+
+        <label>Difficulty: </label>
+        <select name="difficulty">
+            <option value="easy">EASY</option>
+            <option value="medium">MEDIUM</option>
+            <option value="HARD">HARD</option>
+        </select><br>
+
+        <label for="">Number of Questions: </label><br>
+        <input type="number" name="num_questions" min="1" max="20" value="5"><br>
+
+        <button type="submit">GENERATE MCQ'S</button>
+
+    </form>
+</body>
+</html>

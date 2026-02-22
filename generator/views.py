@@ -9,6 +9,9 @@ load_dotenv()
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 
+def home(request):
+    return render(request,"generator/index.html")
+
 def generator_mcqs(request):
     topic = request.GET.get('topic')
     difficulty = request.GET.get('difficulty')
@@ -16,16 +19,19 @@ def generator_mcqs(request):
 
 
     prompt = f"""
-Generate {num_questions} {difficulty} MCQs about {topic}.
+    Generate {num_questions} {difficulty} multiple choice questions about {topic}.
 
-Format:
-Q1:
-A)
-B)
-C)
-D)
-Answer:
-"""
+    Format strictly like:
+
+    Q1: question
+    A) option
+    B) option
+    C) option
+    D) option
+    Answer: correct option
+    """
+
+
     model = genai.GenerativeModel("gemini-2.5-flash")
 
     response = model.generate_content(prompt)
