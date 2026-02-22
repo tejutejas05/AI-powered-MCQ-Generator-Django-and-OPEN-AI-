@@ -1,14 +1,16 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI MCQ GENERATOR</title>
+    <link rel="stylesheet" href="{% static 'generator/style.css' %}">
 </head>
 <body>
     
-    <h2>AI MCQ GENERATOR</h2>
-
+    <center><h2>AI MCQ GENERATOR</h2></center>
+    <div class="form">
     <form method="GET" action="/generate/">
 
         <label>Topic: </label><br>
@@ -27,8 +29,8 @@
         <button type="submit">GENERATE MCQ'S</button>
 
     </form>
+    </div>
 
-    <hr>
 
     <h2>Generated MCQs</h2>
     <div id="mcq-container"></div>

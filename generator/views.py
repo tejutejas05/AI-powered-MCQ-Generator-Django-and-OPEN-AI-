@@ -26,17 +26,17 @@ def generator_mcqs(request):
         }, status=400)
 
     prompt = f"""
-Generate {num_questions} {difficulty} multiple choice questions about {topic}.
+        Generate {num_questions} {difficulty} multiple choice questions about {topic}.
 
-Format strictly like:
+        Format strictly like:
 
-Q1: question
-A) option
-B) option
-C) option
-D) option
-Answer: correct option
-"""
+        Q1: question
+        A) option
+        B) option
+        C) option
+        D) option
+        Answer: correct option
+        """
 
     try:
         model = genai.GenerativeModel("gemini-2.5-flash")

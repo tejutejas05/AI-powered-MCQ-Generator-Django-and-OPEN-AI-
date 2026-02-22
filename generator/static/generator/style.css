@@ -1,0 +1,108 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Page styling */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    
+    background: linear-gradient(90deg,rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
+    padding : 20px;
+    color : #333;
+}
+
+/* Heading */
+h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Center form container */
+.form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+/* Form card */
+.form form {
+    background: #8ff08f;
+    padding: 25px 30px;
+    width: 340px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Labels */
+label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+/* Inputs & select */
+input,
+select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+/* Button styling */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 6px;
+    background: #007bff;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+/* MCQ container */
+#mcq-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+/* Question card */
+.question-box {
+    background: white;
+    padding: 18px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* Question title */
+.question-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Options */
+.option {
+    margin-left: 10px;
+    margin-bottom: 4px;
+}
+
+/* Answer highlight */
+.answer {
+    margin-top: 8px;
+    color: green;
+    font-weight: bold;
+}
