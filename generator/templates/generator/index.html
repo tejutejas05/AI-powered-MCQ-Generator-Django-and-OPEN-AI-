@@ -6,10 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI MCQ GENERATOR</title>
     <link rel="stylesheet" href="{% static 'generator/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Righteous&display=swap" rel="stylesheet">
 </head>
 <body>
     
     <center><h2>AI MCQ GENERATOR</h2></center>
+    <br>
+    <br>
+    <br>
     <div class="form">
     <form method="GET" action="/generate/">
 
@@ -30,57 +36,139 @@
 
     </form>
     </div>
+    <br>
+    <br>
+    <br>
 
 
     <h2>Generated MCQs</h2>
     <div id="mcq-container"></div>
 
   <script>
-        const form = document.querySelector("form");
+let currentMCQs = [];
 
-        form.addEventListener("submit", function(e) {
-            e.preventDefault();  
+const form = document.querySelector("form");
 
-            const topic = form.topic.value;
-            const difficulty = form.difficulty.value;
-            const num_questions = form.num_questions.value;
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
 
-    fetch(`/generate/?topic=${topic}&difficulty=${difficulty}&num_questions=${num_questions}`)
+    const topic = form.topic.value;
+    const difficulty = form.difficulty.value;
+    const num_questions = form.num_questions.value;
+
+    const url = `/generate/?topic=${topic}&difficulty=${difficulty}&num_questions=${num_questions}`;
+
+    fetch(url)
     .then(res => res.json())
     .then(data => {
 
+        if (!data.mcqs) {
+            alert("Server error. Try again.");
+            return;
+        }
+
         const container = document.getElementById("mcq-container");
+        container.innerHTML = "";
 
-        const questions = data.mcqs.split("\n\n");
+        // ✅ If backend returns structured JSON
+        if (Array.isArray(data.mcqs)) {
 
-        let output = "";
+            currentMCQs = data.mcqs;
 
-        questions.forEach(q => {
-            const lines = q.split("\n");
+            data.mcqs.forEach((mcq, index) => {
 
-            output += `<div class="question-box">`;
+                let output = `<div class="question-box">`;
+                output += `<div class="question-title">Q${index+1}: ${mcq.question}</div>`;
 
-            lines.forEach(line => {
+                mcq.options.forEach(opt => {
+                    output += `<div class="option">${opt}</div>`;
+                });
 
-                if(line.startsWith("Q"))
-                    output += `<div class="question-title">${line}</div>`;
+                output += `<div class="answer">Answer: ${mcq.answer}</div>`;
+                output += `</div>`;
 
-                else if(line.startsWith("Answer"))
-                    output += `<div class="answer">${line}</div>`;
+                container.innerHTML += output;
+            });
+        }
 
-                else
-                    output += `<div class="option">${line}</div>`;
+        // ✅ If backend returns plain text (your earlier format)
+        else {
+
+            const questions = data.mcqs.split("\n\n");
+            currentMCQs = questions;
+
+            let output = "";
+
+            questions.forEach(q => {
+                const lines = q.split("\n");
+
+                output += `<div class="question-box">`;
+
+                lines.forEach(line => {
+
+                    if(line.startsWith("Q"))
+                        output += `<div class="question-title">${line}</div>`;
+                    else if(line.startsWith("Answer"))
+                        output += `<div class="answer">${line}</div>`;
+                    else
+                        output += `<div class="option">${line}</div>`;
+                });
+
+                output += `</div>`;
             });
 
-            output += `</div>`;
-        });
-
-        container.innerHTML = output;
+            container.innerHTML = output;
+        }
 
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log("Error:", err));
 });
+
+
+// ✅ DOWNLOAD PDF FUNCTION
+function downloadPDF() {
+
+    if (!currentMCQs || currentMCQs.length === 0) {
+        alert("Generate MCQs first!");
+        return;
+    }
+
+    fetch("/download/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-CSRFToken": getCookie("csrftoken")
+        },
+        body: "mcqs=" + JSON.stringify(currentMCQs)
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        const link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = "MCQs.pdf";
+        link.click();
+    })
+    .catch(err => console.log("Download error:", err));
+}
+
+
+// ✅ CSRF HELPER (Required for Django POST)
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie) {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            }
+        }
+    }
+    return cookieValue;
+}
 </script>
+<button onclick="downloadPDF()">Download PDF</button>
+
 
 </body>
 </html>

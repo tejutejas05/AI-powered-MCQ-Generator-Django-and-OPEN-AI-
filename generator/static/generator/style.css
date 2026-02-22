@@ -8,15 +8,15 @@
 /* Page styling */
 body {
     font-family: Arial, Helvetica, sans-serif;
-    
-    background: linear-gradient(90deg,rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
+    background-image: linear-gradient(to right, #fa709a 0%, #fee140 100%);
     padding : 20px;
-    color : #333;
+    color : black;
 }
 
 /* Heading */
 h2 {
     text-align: center;
+    font-family: "Righteous", sans-serif;;
     margin-bottom: 15px;
 }
 
@@ -29,7 +29,8 @@ h2 {
 
 /* Form card */
 .form form {
-    background: #8ff08f;
+    background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
+    font-family: Arial, Helvetica, sans-serif;
     padding: 25px 30px;
     width: 340px;
     border-radius: 10px;
