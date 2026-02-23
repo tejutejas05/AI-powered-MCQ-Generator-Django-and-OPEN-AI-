@@ -70,7 +70,7 @@ form.addEventListener("submit", function(e) {
         const container = document.getElementById("mcq-container");
         container.innerHTML = "";
 
-        // ✅ If backend returns structured JSON
+        
         if (Array.isArray(data.mcqs)) {
 
             currentMCQs = data.mcqs;
@@ -91,7 +91,7 @@ form.addEventListener("submit", function(e) {
             });
         }
 
-        // ✅ If backend returns plain text (your earlier format)
+        
         else {
 
             const questions = data.mcqs.split("\n\n");
@@ -125,7 +125,7 @@ form.addEventListener("submit", function(e) {
 });
 
 
-// ✅ DOWNLOAD PDF FUNCTION
+
 function downloadPDF() {
 
     if (!currentMCQs || currentMCQs.length === 0) {
@@ -152,7 +152,7 @@ function downloadPDF() {
 }
 
 
-// ✅ CSRF HELPER (Required for Django POST)
+
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie) {
