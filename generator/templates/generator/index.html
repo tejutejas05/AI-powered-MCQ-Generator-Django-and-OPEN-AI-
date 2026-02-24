@@ -66,7 +66,7 @@ form.addEventListener("submit", function(e) {
 
     const container = document.getElementById("mcq-container");
 
-    // ✅ SHOW LOADER
+    
     loading.style.display = "block";
     submitBtn.disabled = true;
     submitBtn.innerText = "Generating...";
@@ -76,7 +76,6 @@ form.addEventListener("submit", function(e) {
     .then(res => res.json())
     .then(data => {
 
-        // ✅ HIDE LOADER
         loading.style.display = "none";
         submitBtn.disabled = false;
         submitBtn.innerText = "Generate MCQs";
@@ -88,7 +87,7 @@ form.addEventListener("submit", function(e) {
 
         container.innerHTML = "";
 
-        // ✅ If response is structured JSON
+        
         if (Array.isArray(data.mcqs)) {
 
             currentMCQs = data.mcqs;
@@ -109,7 +108,7 @@ form.addEventListener("submit", function(e) {
             });
         }
 
-        // ✅ If response is plain text
+        
         else {
 
             const questions = data.mcqs.split("\n\n");

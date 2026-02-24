@@ -11,7 +11,7 @@ from io import BytesIO
 
 load_dotenv()
 
-# configure Gemini safely
+
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 
@@ -34,10 +34,10 @@ def download_pdf(request):
     styles = getSampleStyleSheet()
     elements = []
 
-    # support BOTH formats
+   
     if isinstance(mcqs, list):
 
-        # structured JSON format
+       
         if isinstance(mcqs[0], dict):
             for i, mcq in enumerate(mcqs):
                 elements.append(Paragraph(f"Q{i+1}: {mcq['question']}", styles['Heading3']))
@@ -46,7 +46,7 @@ def download_pdf(request):
                 elements.append(Paragraph(f"Answer: {mcq['answer']}", styles['Normal']))
                 elements.append(Spacer(1, 12))
 
-        # text format
+        
         else:
             for q in mcqs:
                 elements.append(Paragraph(q.replace("\n", "<br/>"), styles['BodyText']))
